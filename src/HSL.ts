@@ -15,6 +15,8 @@ export class HSL {
     this.alpha = alpha;
   }
 
+  // Getters & Setters
+
   get h() {
     return this._h;
   }
@@ -59,6 +61,8 @@ export class HSL {
     }
   }
 
+  // Init
+
   static fromRGB(rgb: RGB): HSL {
     let { r, g, b } = rgb;
 
@@ -95,6 +99,8 @@ export class HSL {
 
     return new HSL(h, s, l, rgb.alpha);
   }
+
+  // Operations
 
   public toString(withAlpha: boolean = false): HSLString {
     if (withAlpha) return `hsla(${this.h}, ${this.s * 100}%, ${this.l * 100}%, ${this.alpha})`;

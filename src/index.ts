@@ -11,6 +11,8 @@ export class Color {
     this._rgb = rgb;
   }
 
+  // Getters & Setters
+
   get rgb(): RGB {
     return this._rgb;
   }
@@ -19,20 +21,7 @@ export class Color {
     this._rgb = rgb;
   }
 
-  get hsl(): HSL {
-    return HSL.fromRGB(this.rgb);
-  }
-
-  get hex(): HexString {
-    const { r, g, b, alpha } = this.rgb;
-
-    const toHex = (value: number) => value.toString(16).padStart(2, "0");
-
-    let hex: HexString = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-    if (alpha < 1) hex += toHex(Math.round(alpha * 255));
-
-    return hex;
-  }
+  // Init
 
   static fromRGB(...args: ConstructorParameters<typeof RGB>): Color {
     return new Color(new RGB(...args));
@@ -54,7 +43,38 @@ export class Color {
     return new Color(RGB.fromHSL(new HSL(...args)));
   }
 
+  // Operations
+
   public clone(): Color {
     return new Color(new RGB(this.rgb.r, this.rgb.g, this.rgb.b, this.rgb.alpha));
+  }
+
+  public updateRGB(callback: (rgb: RGB) => void): this {
+    callback(this.rgb);
+
+    return this;
+  }
+
+  public updateHSL(callback: (hsl: HSL) => void): this {
+    const hsl = HSL.fromRGB(this.rgb);
+    callback(hsl);
+    this.rgb = RGB.fromHSL(hsl);
+
+    return this;
+  }
+
+  get hsl(): HSL {
+    return HSL.fromRGB(this.rgb);
+  }
+
+  get hex(): HexString {
+    const { r, g, b, alpha } = this.rgb;
+
+    const toHex = (value: number) => value.toString(16).padStart(2, "0");
+
+    let hex: HexString = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    if (alpha < 1) hex += toHex(Math.round(alpha * 255));
+
+    return hex;
   }
 }

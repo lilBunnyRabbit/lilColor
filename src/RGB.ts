@@ -15,6 +15,8 @@ export class RGB {
     this.alpha = alpha;
   }
 
+  // Getters & Setters
+
   get r() {
     return this._r;
   }
@@ -59,8 +61,10 @@ export class RGB {
     }
   }
 
+  // Init
+
   static fromHSL(hsl: HSL): RGB {
-    const { h, s, l } = hsl;
+    const { hue: h, saturation: s, l } = hsl;
 
     const hue2rgb = (p: number, q: number, t: number) => {
       return Math.round(
@@ -82,6 +86,8 @@ export class RGB {
 
     return new RGB(hue2rgb(p, q, h + 1 / 3), hue2rgb(p, q, h), hue2rgb(p, q, h - 1 / 3), hsl.alpha);
   }
+
+  // Operations
 
   public toString(withAlpha: boolean = false): RGBString {
     if (withAlpha) return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.alpha})`;
