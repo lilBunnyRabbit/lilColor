@@ -21,6 +21,21 @@ export class Color {
     this._rgb = rgb;
   }
 
+  get hsl(): HSL {
+    return HSL.fromRGB(this.rgb);
+  }
+
+  get hex(): HexString {
+    const { r, g, b, alpha } = this.rgb;
+
+    const toHex = (value: number) => value.toString(16).padStart(2, "0");
+
+    let hex: HexString = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    if (alpha < 1) hex += toHex(Math.round(alpha * 255));
+
+    return hex;
+  }
+
   // Init
 
   static fromRGB(...args: ConstructorParameters<typeof RGB>): Color {
@@ -63,18 +78,8 @@ export class Color {
     return this;
   }
 
-  get hsl(): HSL {
-    return HSL.fromRGB(this.rgb);
-  }
-
-  get hex(): HexString {
-    const { r, g, b, alpha } = this.rgb;
-
-    const toHex = (value: number) => value.toString(16).padStart(2, "0");
-
-    let hex: HexString = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-    if (alpha < 1) hex += toHex(Math.round(alpha * 255));
-
-    return hex;
+  public setAlpha(alpha?: number): this {
+    this.rgb.alpha = alpha;
+    return this;
   }
 }
