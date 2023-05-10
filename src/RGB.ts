@@ -64,7 +64,7 @@ export class RGB {
   // Init
 
   static fromHSL(hsl: HSL): RGB {
-    const { hue: h, saturation: s, l } = hsl;
+    const { h, s, l } = hsl;
 
     const hue2rgb = (p: number, q: number, t: number) => {
       return Math.round(
